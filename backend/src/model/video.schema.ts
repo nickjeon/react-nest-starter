@@ -1,4 +1,4 @@
-import { User } from "./user.model";
+import { User } from './user.model';
 
 export type VideoDocument = Video & Document;
 @Schema()
@@ -11,7 +11,7 @@ export class Video {
     coverImage: string;
     @Prop({default: Date.now()})
     uploadDate: Date;
-    @Prop({type: mongoose.Schema.Types.ObjectId, ref: "User"})
+    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'User'})
     createdBy: User;
 }
 
