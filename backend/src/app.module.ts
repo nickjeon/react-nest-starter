@@ -9,12 +9,20 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { VideoController } from './controller/video.controller';
+import { VideoService } from './service/video.service';
+import { UserController } from './controller/user.controller';
+import { UserService } from './service/user.service';
+import { Video, VideoStream } from './model/video.schema';
+import { User, UserSchema } from './model/user.schema';
 
 import { secret } from './utils/constants';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017/Stream'),
+    MongooseModule.forFeature([{name: User.name, schema: UserSchema}]),
+    MongooseModule.forFeature([{name: Video.name, schema: VideoSchema}]),
     MulterModule.register({
       storage: diskStorage({
         destination: './public',
@@ -32,7 +40,15 @@ import { secret } from './utils/constants';
       rootPath: join(__dirname, '..', 'public'),
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [
+    AppController,
+    VideoController,
+    UserController,
+  ],
+  providers: [
+    AppService,
+    VideoService,
+    UserService
+  ],
 })
 export class AppModule {}
