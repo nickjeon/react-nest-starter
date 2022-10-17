@@ -13,10 +13,11 @@ import { VideoController } from './controller/video.controller';
 import { VideoService } from './service/video.service';
 import { UserController } from './controller/user.controller';
 import { UserService } from './service/user.service';
-import { Video, VideoStream } from './model/video.schema';
+import { Video, VideoSchema } from './model/video.schema';
 import { User, UserSchema } from './model/user.schema';
+import { isAuthenticated } from './app.middleware';
 
-import { secret } from './utils/constants';
+import { jwtSecret } from './utils/constants';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { secret } from './utils/constants';
       })
     }),
     JwtModule.register({
-      secret,
+      secret: jwtSecret,
       signOptions: {expiresIn: '2h'},
     }),
     ServeStaticModule.forRoot({
